@@ -21,3 +21,4 @@ stateful_rule_group_arns = []
 # TG subnet CIDRs for security group
 tg_ipv4_cidrs = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 tg_ipv6_cidrs = ["2600:1f18:abcd:1::/64", "2600:1f18:abcd:2::/64", "2600:1f18:abcd:3::/64"]
+ 

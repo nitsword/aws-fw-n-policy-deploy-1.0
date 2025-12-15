@@ -15,10 +15,18 @@
 
         locals {
     domain_list_data = csvdecode(file(var.rules_csv_path))
+    allowed_domains = [
+    for d in local.domain_list_data : d.domain
+    if upper(trimspace(d.action)) == "ALLOW"
+  ]
 
-    
+  denied_domains = [
+    for d in local.domain_list_data : d.domain
+    if upper(trimspace(d.action)) == "DENY"
+  ]
 
-    # Decode structured 5-tuple CSV and build Suricata rule strings.
+
+    #  5-tuple CSV and build Suricata rule strings.
     # Expected CSV headers: action,protocol,source,source_port,destination,destination_port,msg,sid
     five_tuple_rules_data = csvdecode(file(var.five_tuple_rules_csv_path))
 
@@ -83,7 +91,15 @@
     five_tuple_rules_string = local.five_tuple_rules_string
     domain_rg_capacity      = var.domain_rg_capacity
     stateful_rule_group_arns = var.stateful_rule_group_arns
-    allowed_domains_list = [for item in local.domain_list_data : item.domain]
+    stateful_rule_order     = var.stateful_rule_order
+    stateful_rule_group_objects = var.stateful_rule_group_objects
+    enable_domain_allowlist   = length(local.allowed_domains) > 0
+    allowed_domains_list      = local.allowed_domains
+    enable_domain_denylist    = length(local.denied_domains) > 0
+    denied_domains_list       = local.denied_domains
+    priority_domain_denylist  = var.priority_domain_denylist
+    priority_domain_allowlist = var.priority_domain_allowlist
+    priority_five_tuple       = var.priority_five_tuple
 }
 
     module "firewall" {

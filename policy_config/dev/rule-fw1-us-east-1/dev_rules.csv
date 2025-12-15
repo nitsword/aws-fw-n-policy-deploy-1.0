@@ -1,9 +1,6 @@
-domain,description
-.amazon.com,AWS S3 Access
-s3.dualstack.us-east-1.amazonaws.com,S3 Dual-stack Endpoint
-www.google.com,General Search
-pypi.org,Python Package Index Access
-cran.r-project.org,R Package Repository
-cdnjs.cloudflare.com,Cloudflare CDN Assets
-api.github.com,GitHub API Access
-www.example.com,General Connectivity Test
+domain,action,description
+amazon.com,ALLOW,AWS public services
+github.com,ALLOW,GitHub access
+registry.terraform.io,ALLOW,Terraform registry
+example.com,DENY,Test deny domain
+badssl.com,DENY,SSL test site (deny validation)

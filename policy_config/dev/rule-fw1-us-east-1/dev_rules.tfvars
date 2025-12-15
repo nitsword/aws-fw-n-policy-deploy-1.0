@@ -1,21 +1,38 @@
 environment          = "dev"
-firewall_policy_name = "inspection-firewall-policy-dev"
+firewall_policy_name = "inspection-firewall-policy-dev-one"
+
+stateful_rule_order = "STRICT_ORDER"
+
+priority_domain_denylist  = 10  # Highest priority 
+priority_domain_allowlist = 20  # Second priority 
+priority_five_tuple       = 30  # Lowest priority
+
+enable_domain_allowlist = true
+enable_domain_denylist  = false 
 
 # --- 5-Tuple Rule Group Content ---
 
-five_tuple_rg_capacity  = 100
-# Provide a CSV file containing 5-tuple Suricata rule strings (header: rule).
-# When set, Terraform will read and join the `rule` column into the
-# `five_tuple_rules_string` used by the module.
+five_tuple_rg_capacity    = 100
 five_tuple_rules_csv_path = "policy_config/dev/rule-fw1-us-east-1/five_tuple_rules.csv"
 
-# Path to the domain rules CSV (domains list) used by the root module
-# CSV should have headers: domain,description
 rules_csv_path = "policy_config/dev/rule-fw1-us-east-1/dev_rules.csv"
 
 # --- Domain Rule Group (FQDN) Inputs ---
 
 domain_rg_capacity = 100
+
+stateful_rule_group_objects = [ ]
+
+#stateful_rule_group_objects = [
+	# {
+	#   arn      = "arn:aws:network-firewall:us-east-1:359416636780:stateful-rulegroup/custom-rg-1"
+	#   priority = 40
+	# },
+	# {
+	#   arn      = "arn:aws:network-firewall:us-east-1:359416636780:stateful-rulegroup/custom-rg-2"
+	#   priority = 50
+	# }
+#]
 
 # Complex structured rules (used for testing)
 # domain_rules = [
