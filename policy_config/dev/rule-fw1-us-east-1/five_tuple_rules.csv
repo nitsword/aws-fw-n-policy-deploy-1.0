@@ -1,0 +1,4 @@
+action,protocol,source,source_port,destination,destination_port,msg,sid
+pass,tcp,any,any,any,80,"Allow HTTP",1000001
+pass,tcp,10.0.1.5,any,any,443,"Allow HTTPS from specific host",1000002
+pass,tcp,10.0.0.0/16,Any,192.168.1.10,80,"Allow internal HTTP access to webserver",1000003
