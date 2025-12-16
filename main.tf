@@ -46,7 +46,9 @@
     ])
 }
 
-    module "vpc" {
+
+
+module "vpc" {
     source              = "./modules/vpc"
     vpc_cidr            = var.vpc_cidr
     azs                 = var.azs
@@ -54,23 +56,20 @@
     environment         = var.environment
     region              = var.region
     base_tags           = var.base_tags
-    public_subnet_ids   = module.subnets.public_subnet_ids
-    public_subnet_cidrs = var.public_subnet_cidrs
-    }
+}
 
-    module "subnets" {
+module "subnets" {
     source                  = "./modules/subnets"
     vpc_id                  = module.vpc.vpc_id
     azs                     = var.azs
-    application_ou_name = var.application_ou_name
-    environment         = var.environment
-    region              = var.region
-    base_tags           = var.base_tags
-    private_tg_cidrs        = var.private_tg_cidrs
-    private_firewall_cidrs  = var.private_firewall_cidrs
-    public_subnet_cidrs     = var.public_subnet_cidrs
-    vpc_ipv6_cidr           = module.vpc.vpc_ipv6_cidr_block
-    }
+    application_ou_name      = var.application_ou_name
+    environment              = var.environment
+    region                   = var.region
+    base_tags                = var.base_tags
+    private_tg_cidrs         = var.private_tg_cidrs
+    private_firewall_cidrs   = var.private_firewall_cidrs
+    vpc_ipv6_cidr            = module.vpc.vpc_ipv6_cidr_block
+}
 
     module "security_groups" {
     source        = "./modules/security_groups"

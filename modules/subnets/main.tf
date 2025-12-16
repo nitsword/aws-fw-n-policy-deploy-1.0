@@ -6,7 +6,8 @@ locals {
 }
 
 
-##  Private Transit Gateway (TG) Subnets
+
+## Private Transit Gateway (TG) Subnets
 resource "aws_subnet" "private_tg" {
   count                     = length(var.azs)
   vpc_id                    = var.vpc_id
@@ -23,7 +24,7 @@ resource "aws_subnet" "private_tg" {
 
   tags = merge(
   {
-    Name                  = "${var.application_ou_name}-${var.environment}-subnet-tg-${count.index}"
+    Name                  = "${var.application_ou_name}-${var.environment}-subnet-tg-${count.index}-${var.azs[count.index]}"
     "Resource Type"       = "subnet-tg"
     "Creation Date"       = timestamp()
     "Environment"         = var.environment
@@ -52,7 +53,7 @@ resource "aws_subnet" "private_firewall" {
 
   tags = merge(
   {
-    Name                  = "${var.application_ou_name}-${var.environment}-subnet-fw-${count.index}"
+    Name                  = "${var.application_ou_name}-${var.environment}-subnet-fw-${count.index}-${var.azs[count.index]}"
     "Resource Type"       = "subnet-fw"
     "Creation Date"       = timestamp()
     "Environment"         = var.environment
@@ -64,23 +65,3 @@ resource "aws_subnet" "private_firewall" {
 }
 
 
-## Public Subnets
-resource "aws_subnet" "public" {
-  count                   = length(var.public_subnet_cidrs)
-  vpc_id                  = var.vpc_id
-  cidr_block              = var.public_subnet_cidrs[count.index]
-  availability_zone       = var.azs[count.index]
-  map_public_ip_on_launch = true
-
-  tags = merge(
-  {
-    Name                  = "${var.application_ou_name}-${var.environment}-subnet-public-${count.index}"
-    "Resource Type"       = "subnet-public"
-    "Creation Date"       = timestamp()
-    "Environment"         = var.environment
-    "Application ou name" = var.application_ou_name
-    "Created by"          = "Cloud Network Team"
-    "Region"              = var.region
-  },var.base_tags
-)
-}

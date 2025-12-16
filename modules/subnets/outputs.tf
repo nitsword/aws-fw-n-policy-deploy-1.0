@@ -11,7 +11,3 @@ output "private_firewall_subnet_ids" {
 #   description = "List of public subnet IDs"
 # }
 
-output "public_subnet_ids" {
-  description = "IDs of the public subnets."
-  value       = aws_subnet.public[*].id
-}

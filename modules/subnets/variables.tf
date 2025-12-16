@@ -26,10 +26,7 @@ variable "private_firewall_cidrs" {
 }
 
 
-variable "public_subnet_cidrs" {
-  description = "List of IPv4 CIDR blocks for public subnets"
-  type        = list(string)
-}
+
 
 variable "tags" {
   description = "Tags to apply to the VPC"

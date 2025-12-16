@@ -11,7 +11,7 @@ private_firewall_cidrs = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
 # Routing and Firewall Setup
 firewall_endpoint_cidr = "0.0.0.0/0"
-firewall_name = "inspection-firewall-dev"
+firewall_name = "inspection-firewall-dev-us-east-1"
 #irewall_policy_name = "inspection-firewall-policy-dev"
 
 # dynamic variables

@@ -13,15 +13,8 @@ variable "azs" {
 #   type        = list(string)
 # }
 
-variable "public_subnet_cidrs" {
-  description = "List of CIDR blocks for public subnets"
-  type        = list(string)
-}
 
-variable "public_subnet_ids" {
-  description = "List of public subnet IDs created by the subnets module."
-  type        = list(string)
-}
+
 
 variable "tags" {
   description = "Tags to apply to the VPC"
