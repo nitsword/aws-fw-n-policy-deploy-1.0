@@ -1,6 +1,7 @@
 locals {
   all_firewall_subnet_ids  = var.firewall_subnet_ids
   first_firewall_subnet_id = var.firewall_subnet_ids[0]
+  fw_name = "${var.application}-${var.env}-inspection-firewall-${var.region}"
 
   firewall_eni_details = [
     for state in aws_networkfirewall_firewall.inspection_firewall.firewall_status[0].sync_states :
@@ -16,7 +17,7 @@ locals {
 # 4. Network Firewall Resource
 # -------------------------------------------------------------------------
 resource "aws_networkfirewall_firewall" "inspection_firewall" {
-  name                = var.firewall_name
+  name                = local.fw_name
   firewall_policy_arn = var.firewall_policy_arn
   vpc_id              = var.vpc_id
 
