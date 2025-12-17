@@ -16,9 +16,18 @@ variable "five_tuple_rg_capacity" {
   type        = number
 }
 
-variable "five_tuple_rules_string" {
-  description = "Suricata-compatible rules string for 5-tuple inspection."
-  type        = string
+variable "five_tuple_rules" {
+  description = "List of 5-tuple stateful rules as objects."
+  type = list(object({
+    action = string
+    protocol = string
+    source = string
+    source_port = string
+    destination = string
+    destination_port = string
+    direction = string
+    sid = string
+  }))
 }
 
 # -------------------------------------------------------------------------
@@ -27,30 +36,6 @@ variable "five_tuple_rules_string" {
 variable "domain_rg_capacity" {
   description = "Capacity for domain-based rule groups (allowlist/denylist)."
   type        = number
-}
-
-variable "enable_domain_allowlist" {
-  description = "Enable AWS-managed domain allowlist (FQDN filtering)."
-  type        = bool
-  default     = false
-}
-
-variable "allowed_domains_list" {
-  description = "List of allowed FQDNs (used when enable_domain_allowlist = true)."
-  type        = list(string)
-  default     = []
-}
-
-variable "enable_domain_denylist" {
-  description = "Enable AWS-managed domain denylist (FQDN filtering)."
-  type        = bool
-  default     = false
-}
-
-variable "denied_domains_list" {
-  description = "List of denied FQDNs (used when enable_domain_denylist = true)."
-  type        = list(string)
-  default     = []
 }
 
 variable "stateful_rule_group_arns" {
@@ -71,12 +56,6 @@ variable "stateful_rule_group_objects" {
   default = []
 }
 
-
-variable "priority_domain_denylist" {
-  description = "Priority for the internal Domain DENYLIST rule group (used in STRICT_ORDER)."
-  type        = number
-}
-
 variable "priority_domain_allowlist" {
   description = "Priority for the internal Domain ALLOWLIST rule group (used in STRICT_ORDER)."
   type        = number
@@ -91,6 +70,18 @@ variable "tags" {
   description = "Tags to apply to the VPC"
   type        = map(string)
   default     = {}
+}
+
+variable "domain_list" {
+  type        = list(string)
+  description = "List of domains to allow (e.g., ['.google.com'])"
+  default     = []
+}
+
+variable "enable_domain_allowlist" {
+  description = "Toggle to enable or disable the domain allowlist rule group"
+  type        = bool
+  default     = false
 }
 
 variable "application" { type = string }

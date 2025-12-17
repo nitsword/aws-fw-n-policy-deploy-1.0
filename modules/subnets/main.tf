@@ -10,7 +10,7 @@ locals {
 ## Private Transit Gateway (TG) Subnets
 resource "aws_subnet" "private_tg" {
   count                     = length(var.azs)
-  vpc_id                    = var.vpc_id
+  vpc_id     = var.vpc_secondary_id
   cidr_block                = var.private_tg_cidrs[count.index]
   availability_zone         = var.azs[count.index]
   map_public_ip_on_launch   = false
@@ -39,7 +39,7 @@ resource "aws_subnet" "private_tg" {
 ## Private Network Firewall Subnets
 resource "aws_subnet" "private_firewall" {
   count                     = length(var.azs)
-  vpc_id                    = var.vpc_id
+  vpc_id     = var.vpc_secondary_id
   cidr_block                = var.private_firewall_cidrs[count.index]
   availability_zone         = var.azs[count.index]
   map_public_ip_on_launch   = false

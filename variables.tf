@@ -26,11 +26,11 @@ variable "private_firewall_cidrs" {
   default     = []
 }
 
-variable "private_tg_ipv6_cidrs" {
-  description = "IPv6 CIDRs for private TG subnets"
-  type        = list(string)
-  default     = []
-}
+# variable "private_tg_ipv6_cidrs" {
+#   description = "IPv6 CIDRs for private TG subnets"
+#   type        = list(string)
+#   default     = []
+# }
 
 variable "private_firewall_ipv6_cidrs" {
   description = "IPv6 CIDRs for private firewall subnets"
@@ -50,12 +50,6 @@ variable "firewall_policy_name" {
   default     = "inspection-firewall-policy"
 }
 
-
-variable "priority_domain_denylist" {
-  description = "Priority for the Domain DENYLIST rule group (STRICT_ORDER evaluation)."
-  type        = number
-}
-
 variable "priority_domain_allowlist" {
   description = "Priority for the Domain ALLOWLIST rule group (STRICT_ORDER evaluation)."
   type        = number
@@ -66,7 +60,6 @@ variable "priority_five_tuple" {
   type        = number
 }
 
-# ------------------------------------------------------------------
 
 variable "stateful_rule_group_arns" {
   description = "List of ARNs for stateful rule groups"
@@ -112,6 +105,11 @@ variable "allowed_domains_list" {
   description = "FQDNs/domains for targets in the Domain List rule group."
   type        = list(string)
   default     = [] 
+}
+
+variable "enable_domain_allowlist" {
+  type    = bool
+  default = false
 }
 
 variable "rules_csv_path" {
@@ -162,4 +160,9 @@ variable "stateful_rule_group_objects" {
 variable "transit_gateway_id" {
   description = "Transit Gateway ID"
   type        = string
+}
+
+variable "secondary_cidr_blocks" {
+  type        = list(string)
+  description = "List of secondary IPv4 CIDR blocks passed from dev.tfvars"
 }

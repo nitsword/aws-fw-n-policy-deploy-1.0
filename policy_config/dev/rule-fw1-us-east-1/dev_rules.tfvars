@@ -1,14 +1,12 @@
 environment          = "non-production::dev"
-firewall_policy_name = "inspection-firewall-policy-dev-one"
+firewall_policy_name = "inspection-firewall-policy-dev"
 
 stateful_rule_order = "STRICT_ORDER"
-
-priority_domain_denylist  = 10  # Highest priority 
-priority_domain_allowlist = 20  # Second priority 
-priority_five_tuple       = 30  # Lowest priority
+ 
+priority_domain_allowlist = 10  # Second priority 
+priority_five_tuple       = 20  # Lowest priority
 
 enable_domain_allowlist = true
-enable_domain_denylist  = false 
 
 # --- 5-Tuple Rule Group Content ---
 

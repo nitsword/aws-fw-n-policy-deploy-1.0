@@ -1,6 +1,4 @@
 domain,action,description
-amazon.com,ALLOW,AWS public services
-github.com,ALLOW,GitHub access
-registry.terraform.io,ALLOW,Terraform registry
-example.com,DENY,Test deny domain
-badssl.com,DENY,SSL test site (deny validation)
+.amazon.com,ALLOW,AWS public services and subdomains
+.github.com,ALLOW,GitHub access and subdomains
+.terraform.io,ALLOW,Terraform registry and subdomains

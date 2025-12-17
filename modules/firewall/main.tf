@@ -24,6 +24,7 @@ resource "aws_networkfirewall_firewall" "inspection_firewall" {
     for_each = var.firewall_subnet_ids
     content {
       subnet_id = subnet_mapping.value
+      ip_address_type = "DUALSTACK"
     }
   }
     

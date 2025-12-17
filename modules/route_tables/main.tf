@@ -25,6 +25,16 @@ resource "aws_route" "private_tg_default_to_fw" {
   )
 }
 
+resource "aws_route" "private_tg_default_v6_to_fw" {
+  count = length(var.private_tg_subnet_ids)
+  route_table_id              = aws_route_table.private_tg[count.index].id
+  destination_ipv6_cidr_block = "::/0"
+  vpc_endpoint_id = lookup(
+    var.firewall_endpoint_map, 
+    var.private_tg_subnets_full[count.index].availability_zone
+  )
+}
+
 # Associate each private_tg subnet with its route table
 resource "aws_route_table_association" "private_tg_assoc" {
   count          = length(var.private_tg_subnet_ids)
@@ -50,6 +60,14 @@ resource "aws_route_table" "firewall" {
 resource "aws_route" "firewall_default_to_tgw" {
   route_table_id         = aws_route_table.firewall.id
   destination_cidr_block = "0.0.0.0/0"
+  transit_gateway_id     = var.transit_gateway_id
+  depends_on = [var.tgw_attachment_id]
+}
+
+# Route 0.0.0.0/0 in firewall route table to transit gateway
+resource "aws_route" "firewall_default_v6_to_tgw" {
+  route_table_id         = aws_route_table.firewall.id
+  destination_ipv6_cidr_block = "::/0"
   transit_gateway_id     = var.transit_gateway_id
   depends_on = [var.tgw_attachment_id]
 }

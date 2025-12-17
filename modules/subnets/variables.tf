@@ -1,8 +1,13 @@
 ## modules/subnets/variables.tf
 
-variable "vpc_id" {
-  description = "VPC ID"
+# variable "vpc_id" {
+#   description = "VPC ID"
+#   type        = string
+# }
+
+variable "vpc_secondary_id" {
   type        = string
+  description = "The VPC ID associated with secondary CIDR blocks"
 }
 
 variable "azs" {
