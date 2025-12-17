@@ -12,6 +12,11 @@ variable "vpc_id" {
   type        = string
 }
 
+variable "azs" {
+  description = "List of availability zones"
+  type        = list(string)
+}
+
 variable "firewall_subnet_ids" {
   description = "List of firewall subnet IDs"
   type        = list(string)
@@ -98,7 +103,8 @@ variable "private_tg_subnets_full" {
   description = "The full subnet objects for private_tg"
 }
 
-variable "application_ou_name" { type = string }
+variable "application" { type = string }
 variable "environment" { type = string }
 variable "region" { type = string }
 variable "base_tags" { type = map(string) }
+variable "env" { type = string }

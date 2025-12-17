@@ -31,7 +31,12 @@ variable "tags" {
   default     = {}
 }
 
-variable "application_ou_name" { type = string }
+# variable "private_tg_subnets_full" {
+#   description = "The list of full subnet objects from the subnets module"
+# }
+
+variable "application" { type = string }
 variable "environment" { type = string }
 variable "region" { type = string }
 variable "base_tags" { type = map(string) }
+variable "env" { type = string }

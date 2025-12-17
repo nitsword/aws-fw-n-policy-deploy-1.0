@@ -6,11 +6,11 @@ resource "aws_vpc" "inspection_vpc" {
 
   tags = merge(
   {
-    Name                  = "${var.application_ou_name}-${var.environment}-vpc-${var.region}"
-    "Resource Type"       = "vpc"
+    Name                  = "${var.application}-${var.env}-inspection-vpc-${var.region}"
+    "Resource Type"       = "inspection-vpc"
     "Creation Date"       = timestamp()
     "Environment"         = var.environment
-    "Application ou name" = var.application_ou_name
+    "Application" = var.application
     "Created by"          = "Cloud Network Team"
     "Region"              = var.region
   },var.base_tags

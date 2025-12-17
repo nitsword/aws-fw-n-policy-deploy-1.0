@@ -22,9 +22,17 @@ resource "aws_networkfirewall_rule_group" "five_tuple_rule_group" {
     }
   }
 
-  tags = {
-    Name = "5-Tuple-RG"
-  }
+  tags = merge(
+  {
+    Name                  = "${var.application}-${var.env}-five-tuple-rg-${var.region}"
+    "Resource Type"       = "five tuple rg"
+    "Creation Date"       = timestamp()
+    "Environment"         = var.environment
+    "Application" = var.application
+    "Created by"          = "Cloud Network Team"
+    "Region"              = var.region
+  },var.base_tags
+)
 }
 
 // -------------------------------------------------------------------------
@@ -81,9 +89,17 @@ resource "aws_networkfirewall_rule_group" "domain_allowlist" {
     }
   }
 
-  tags = {
-    Name = "Domain-RG-Allowlist"
-  }
+tags = merge(
+  {
+    Name                  = "${var.application}-${var.env}-domain-allow-rg-${var.region}"
+    "Resource Type"       = "domain-allow-rg"
+    "Creation Date"       = timestamp()
+    "Environment"         = var.environment
+    "Application" = var.application
+    "Created by"          = "Cloud Network Team"
+    "Region"              = var.region
+  },var.base_tags
+)
 }
 
 // -------------------------------------------------------------------------
@@ -161,7 +177,15 @@ resource "aws_networkfirewall_firewall_policy" "firewall_policy" {
     }
   }
 
-  tags = {
-    Name = var.firewall_policy_name
-  }
+tags = merge(
+  {
+    Name                  = "${var.application}-${var.env}-firewall-policy-${var.region}"
+    "Resource Type"       = "firewall-policy"
+    "Creation Date"       = timestamp()
+    "Environment"         = var.environment
+    "Application" = var.application
+    "Created by"          = "Cloud Network Team"
+    "Region"              = var.region
+  },var.base_tags
+)
 }

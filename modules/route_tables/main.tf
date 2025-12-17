@@ -4,11 +4,11 @@ resource "aws_route_table" "private_tg" {
   count  = length(var.private_tg_subnet_ids)
   vpc_id = var.vpc_id
   tags = merge({
-    Name = "${var.application_ou_name}-${var.environment}-tg-rt-${var.region}-${count.index}"
+    Name = "${var.application}-${var.env}-tg-rt-${var.private_tg_subnets_full[count.index].availability_zone}"
     "Resource Type" = "route-table-tg"
     "Creation Date" = timestamp()
     "Environment" = var.environment
-    "Application ou name" = var.application_ou_name
+    "Application" = var.application
     "Created by" = "Cloud Network Team"
     "Region" = var.region
   }, var.base_tags)
@@ -36,11 +36,11 @@ resource "aws_route_table_association" "private_tg_assoc" {
 resource "aws_route_table" "firewall" {
   vpc_id = var.vpc_id
   tags = merge({
-    Name = "${var.application_ou_name}-${var.environment}-fw-rt-${var.region}"
+    Name = "${var.application}-${var.env}-fw-rt-${var.region}"
     "Resource Type" = "route-table-fw"
     "Creation Date" = timestamp()
     "Environment" = var.environment
-    "Application ou name" = var.application_ou_name
+    "Application" = var.application
     "Created by" = "Cloud Network Team"
     "Region" = var.region
   }, var.base_tags)

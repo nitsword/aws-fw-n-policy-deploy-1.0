@@ -1,5 +1,6 @@
-application_ou_name = "ntw"
-environment = "dev"
+application = "ntw"
+environment = "non-production::dev"
+env = "dev"
 region = "us-east-1"
 vpc_cidr = "10.0.0.0/16"
 azs = ["us-east-1a", "us-east-1b", "us-east-1d"]

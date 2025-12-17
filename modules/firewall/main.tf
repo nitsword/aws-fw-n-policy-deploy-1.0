@@ -32,11 +32,11 @@ resource "aws_networkfirewall_firewall" "inspection_firewall" {
 
   tags = merge(
   {
-    Name                  = "${var.application_ou_name}-${var.environment}-firewall-${var.region}"
+    Name                  = "${var.application}-${var.env}-firewall-${var.region}"
     "Resource Type"       = "firewall"
     "Creation Date"       = timestamp()
     "Environment"         = var.environment
-    "Application ou name" = var.application_ou_name
+    "Application" = var.application
     "Created by"          = "Cloud Network Team"
     "Region"              = var.region
   },var.base_tags

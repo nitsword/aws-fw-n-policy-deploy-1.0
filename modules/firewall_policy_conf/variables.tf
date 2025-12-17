@@ -3,10 +3,10 @@ variable "firewall_policy_name" {
   type        = string
 }
 
-variable "environment" {
-  description = "Deployment environment (e.g., dev, prod)."
-  type        = string
-}
+# variable "environment" {
+#   description = "Deployment environment (e.g., dev, prod)."
+#   type        = string
+# }
 
 # -------------------------------------------------------------------------
 # 5-Tuple Stateful Rule Group Inputs
@@ -86,3 +86,15 @@ variable "priority_five_tuple" {
   description = "Priority for the internal 5-Tuple rule group (used in STRICT_ORDER)."
   type        = number
 }
+
+variable "tags" {
+  description = "Tags to apply to the VPC"
+  type        = map(string)
+  default     = {}
+}
+
+variable "application" { type = string }
+variable "environment" { type = string }
+variable "region" { type = string }
+variable "base_tags" { type = map(string) }
+variable "env" { type = string }

@@ -23,11 +23,11 @@ resource "aws_security_group" "firewall_sg" {
 
   tags = merge(
   {
-    Name                  = "${var.application_ou_name}-${var.environment}-sg-${var.region}"
+    Name                  = "${var.application}-${var.env}-sg-${var.region}"
     "Resource Type"       = "security-group"
     "Creation Date"       = timestamp()
     "Environment"         = var.environment
-    "Application ou name" = var.application_ou_name
+    "Application" = var.application
     "Created by"          = "Cloud Network Team"
     "Region"              = var.region
   },var.base_tags

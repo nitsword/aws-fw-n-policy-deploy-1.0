@@ -52,8 +52,9 @@ module "vpc" {
     source              = "./modules/vpc"
     vpc_cidr            = var.vpc_cidr
     azs                 = var.azs
-    application_ou_name = var.application_ou_name
+    application = var.application
     environment         = var.environment
+    env = var.env
     region              = var.region
     base_tags           = var.base_tags
 }
@@ -62,9 +63,10 @@ module "subnets" {
     source                  = "./modules/subnets"
     vpc_id                  = module.vpc.vpc_id
     azs                     = var.azs
-    application_ou_name      = var.application_ou_name
+    application     = var.application
     environment              = var.environment
     region                   = var.region
+    env                      = var.env
     base_tags                = var.base_tags
     private_tg_cidrs         = var.private_tg_cidrs
     private_firewall_cidrs   = var.private_firewall_cidrs
@@ -74,9 +76,10 @@ module "subnets" {
     module "security_groups" {
     source        = "./modules/security_groups"
     vpc_id        = module.vpc.vpc_id
-    application_ou_name = var.application_ou_name
+    application  = var.application
     environment         = var.environment
     region              = var.region
+    env                      = var.env
     base_tags           = var.base_tags
     tg_ipv4_cidrs = var.private_tg_cidrs
     tg_ipv6_cidrs = var.private_tg_ipv6_cidrs
@@ -84,7 +87,11 @@ module "subnets" {
 
     module "firewall_policy_conf" {
     source = "./modules/firewall_policy_conf"
-    environment          = var.environment 
+    environment          = var.environment
+    application = var.application
+    region              = var.region
+    env                      = var.env
+    base_tags           = var.base_tags
     firewall_policy_name = var.firewall_policy_name
     five_tuple_rg_capacity  = var.five_tuple_rg_capacity
     five_tuple_rules_string = local.five_tuple_rules_string
@@ -103,9 +110,10 @@ module "subnets" {
 
     module "firewall" {
     source                          = "./modules/firewall"
-    application_ou_name = var.application_ou_name
+    application = var.application
     environment         = var.environment
     region              = var.region
+    env                      = var.env
     base_tags           = var.base_tags
     firewall_name                   = var.firewall_name
     firewall_policy_name            = var.firewall_policy_name
@@ -151,9 +159,11 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
 module "route_tables" {
   source              = "./modules/route_tables"
   vpc_id              = module.vpc.vpc_id
-  application_ou_name = var.application_ou_name
+  application = var.application
   environment         = var.environment
   region              = var.region
+  azs                     = var.azs
+  env                      = var.env
   base_tags           = var.base_tags
   transit_gateway_id  = var.transit_gateway_id
   tgw_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.this.id

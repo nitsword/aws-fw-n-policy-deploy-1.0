@@ -134,8 +134,9 @@ variable "tags" {
   default     = {}
 }
 
-variable "application_ou_name" { type = string }
+variable "application" { type = string }
 variable "environment" { type = string }
+variable "env" { type = string }
 
 variable "base_tags" {
   type    = map(string)

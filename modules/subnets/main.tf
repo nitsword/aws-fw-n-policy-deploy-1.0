@@ -24,11 +24,11 @@ resource "aws_subnet" "private_tg" {
 
   tags = merge(
   {
-    Name                  = "${var.application_ou_name}-${var.environment}-subnet-tg-${count.index}-${var.azs[count.index]}"
+    Name                  = "${var.application}-${var.env}-subnet-tg-${var.azs[count.index]}"
     "Resource Type"       = "subnet-tg"
     "Creation Date"       = timestamp()
     "Environment"         = var.environment
-    "Application ou name" = var.application_ou_name
+    "Application" = var.application
     "Created by"          = "Cloud Network Team"
     "Region"              = var.region
   },var.base_tags
@@ -53,11 +53,11 @@ resource "aws_subnet" "private_firewall" {
 
   tags = merge(
   {
-    Name                  = "${var.application_ou_name}-${var.environment}-subnet-fw-${count.index}-${var.azs[count.index]}"
+    Name                  = "${var.application}-${var.env}-subnet-fw-${var.azs[count.index]}"
     "Resource Type"       = "subnet-fw"
     "Creation Date"       = timestamp()
     "Environment"         = var.environment
-    "Application ou name" = var.application_ou_name
+    "Application" = var.application
     "Created by"          = "Cloud Network Team"
     "Region"              = var.region
   },var.base_tags

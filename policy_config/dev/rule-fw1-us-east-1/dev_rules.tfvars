@@ -1,4 +1,4 @@
-environment          = "dev"
+environment          = "non-production::dev"
 firewall_policy_name = "inspection-firewall-policy-dev-one"
 
 stateful_rule_order = "STRICT_ORDER"
