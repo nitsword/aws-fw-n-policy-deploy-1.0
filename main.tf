@@ -116,18 +116,52 @@ module "subnets" {
     firewall_policy_arn = module.firewall_policy_conf.firewall_policy_arn
 }
 
-module "route_tables" {
-    source                          = "./modules/route_tables"
+# Create the TGW Attachment
+resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
+  subnet_ids         = module.subnets.private_firewall_subnet_ids
+  transit_gateway_id = var.transit_gateway_id
+  vpc_id             = module.vpc.vpc_id
 
-    vpc_id                          = module.vpc.vpc_id
-    application_ou_name = var.application_ou_name
-    environment         = var.environment
-    region              = var.region
-    base_tags           = var.base_tags
-    firewall_subnet_ids             = module.subnets.private_firewall_subnet_ids
+  dns_support = "enable"
+  transit_gateway_default_route_table_association = true
+  transit_gateway_default_route_table_propagation = true
+
+  tags = {
+    Name = "tgw-attachment-${var.environment}"
+  }
+}
+
+
+# module "route_tables" {
+#     source                          = "./modules/route_tables"
+
+#     vpc_id                          = module.vpc.vpc_id
+#     application_ou_name = var.application_ou_name
+#     environment         = var.environment
+#     region              = var.region
+#     base_tags           = var.base_tags
+#     firewall_subnet_ids             = module.subnets.private_firewall_subnet_ids
     
-    firewall_endpoint_cidr          = module.firewall.firewall_endpoint_cidr
-    firewall_endpoint_gateway_id    = module.firewall.firewall_endpoint_gateway_id 
-    first_firewall_eni_id           = module.firewall.first_firewall_eni_id_for_route
-    firewall_eni_id_for_route       = ""
+#     firewall_endpoint_cidr          = module.firewall.firewall_endpoint_cidr
+#     firewall_endpoint_gateway_id    = module.firewall.firewall_endpoint_gateway_id 
+#     first_firewall_eni_id           = module.firewall.first_firewall_eni_id_for_route
+#     firewall_eni_id_for_route       = ""
+# }
+
+module "route_tables" {
+  source              = "./modules/route_tables"
+  vpc_id              = module.vpc.vpc_id
+  application_ou_name = var.application_ou_name
+  environment         = var.environment
+  region              = var.region
+  base_tags           = var.base_tags
+  transit_gateway_id  = var.transit_gateway_id
+  tgw_attachment_id   = aws_ec2_transit_gateway_vpc_attachment.this.id
+  enable_ipv6         = true
+  private_tg_subnets_full     = module.subnets.private_tg_subnets 
+  private_tg_subnet_ids       = module.subnets.private_tg_subnet_ids
+  private_firewall_subnet_ids = module.subnets.private_firewall_subnet_ids
+  firewall_endpoint_map = {
+    for ss in module.firewall.firewall_sync_states : ss.availability_zone => ss.attachment[0].endpoint_id
+  }
 }

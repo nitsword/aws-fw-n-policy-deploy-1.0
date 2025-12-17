@@ -157,3 +157,8 @@ variable "stateful_rule_group_objects" {
   type = list(object({ arn = string, priority = number }))
   default = []
 }
+
+variable "transit_gateway_id" {
+  description = "Transit Gateway ID"
+  type        = string
+}

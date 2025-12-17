@@ -25,9 +25,6 @@ variable "private_firewall_cidrs" {
   type        = list(string)
 }
 
-
-
-
 variable "tags" {
   description = "Tags to apply to the VPC"
   type        = map(string)

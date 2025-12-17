@@ -3,8 +3,10 @@ environment = "dev"
 region = "us-east-1"
 vpc_cidr = "10.0.0.0/16"
 azs = ["us-east-1a", "us-east-1b", "us-east-1d"]
+#transit_gateway_id = "tgw-00d08c76bf62baaa7"
+transit_gateway_id = "tgw-09396a29da000e3c8"
 
-public_subnet_cidrs = ["10.0.21.0/24", "10.0.22.0/24", "10.0.23.0/24"]
+#public_subnet_cidrs = ["10.0.21.0/24", "10.0.22.0/24", "10.0.23.0/24"]
 
 private_tg_cidrs = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 private_firewall_cidrs = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
